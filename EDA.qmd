@@ -1,0 +1,65 @@
+---
+title: "EDA"
+format: html
+editor: visual
+---
+
+# Final Project EDA File - Natalie Root
+
+#### Establish Libraries
+
+```{r}
+
+```
+
+## Introduction Section
+
+#### Briefly describe the data and variables
+
+
+#### Describe the purpose of the EDA and ultimate modeling goal
+
+
+## Data Section
+
+#### Import the data
+
+```{r}
+
+```
+
+#### Convert variables to factors with meaningful names
+
+```{r}
+
+```
+
+#### Check on missingness
+
+```{r}
+
+```
+
+
+## Summarizations Section
+
+#### Produce meaningful summary statistics
+
+```{r}
+
+```
+
+#### Plot the data
+
+```{r}
+
+```
+
+#### What are you exploring? What do these summaries and graphs say about the relationships within the data?
+
+
+## Modeling Page Link
+
+```{r}
+#[Click here for the Modeling Page](Modeling.html)
+```
