@@ -61,9 +61,82 @@ diabetes_data <- read.csv("diabetes_binary_health_indicators_BRFSS2015.csv")
 #### Convert variables to factors with meaningful names
 
 ```{r}
-# Create a factor version of the ___ variable
+# Create a factor version of the Diabetes_binary variable
 diabetes_data <- diabetes_data |>
   mutate(___ = as.factor(___))
+
+# Create a factor version of the HighBP variable
+diabetes_data <- diabetes_data |>
+  mutate(___ = as.factor(___))
+
+# Create a factor version of the HighChol variable
+diabetes_data <- diabetes_data |>
+  mutate(___ = as.factor(___))
+
+# Create a factor version of the CholCheck variable
+diabetes_data <- diabetes_data |>
+  mutate(___ = as.factor(___))
+
+# Create a factor version of the Smoker variable
+diabetes_data <- diabetes_data |>
+  mutate(___ = as.factor(___))
+
+# Create a factor version of the Stroke variable
+diabetes_data <- diabetes_data |>
+  mutate(___ = as.factor(___))
+
+# Create a factor version of the HeartDiseaseorAttack variable
+diabetes_data <- diabetes_data |>
+  mutate(___ = as.factor(___))
+
+# Create a factor version of the PhysActivity variable
+diabetes_data <- diabetes_data |>
+  mutate(___ = as.factor(___))
+
+# Create a factor version of the Fruits variable
+diabetes_data <- diabetes_data |>
+  mutate(___ = as.factor(___))
+
+# Create a factor version of the Veggies variable
+diabetes_data <- diabetes_data |>
+  mutate(___ = as.factor(___))
+
+# Create a factor version of the HvyAlcoholConsump variable
+diabetes_data <- diabetes_data |>
+  mutate(___ = as.factor(___))
+
+# Create a factor version of the AnyHealthcare variable
+diabetes_data <- diabetes_data |>
+  mutate(___ = as.factor(___))
+
+# Create a factor version of the NoDocbcCost variable
+diabetes_data <- diabetes_data |>
+  mutate(___ = as.factor(___))
+
+# Create a factor version of the GenHlth variable
+diabetes_data <- diabetes_data |>
+  mutate(___ = as.factor(___))
+
+# Create a factor version of the DiffWalk variable
+diabetes_data <- diabetes_data |>
+  mutate(___ = as.factor(___))
+
+# Create a factor version of the Sex variable
+diabetes_data <- diabetes_data |>
+  mutate(___ = as.factor(___))
+
+# Create a factor version of the Age variable
+diabetes_data <- diabetes_data |>
+  mutate(___ = as.factor(___))
+
+# Create a factor version of the Education variable
+diabetes_data <- diabetes_data |>
+  mutate(___ = as.factor(___))
+
+# Create a factor version of the Income variable
+diabetes_data <- diabetes_data |>
+  mutate(___ = as.factor(___))
+
 ```
 
 #### Check on missingness
