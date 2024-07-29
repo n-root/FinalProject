@@ -164,71 +164,55 @@ diabetes_data |>
 
 ```{r}
 diabetes_data |>
-  summarise(across(matches("G[0-9]"), list(mean = mean, sd = sd), .names = "{.col}.{.fn}"))
+  summarize(across(matches(c("BMI", "MentHlth", "PhysHlth")), list(mean = mean, sd = sd), .names = "{.col}.{.fn}"))
 ```
 
 #### Numeric Variable Summary Filtered
 
 ```{r}
 diabetes_data |>
-  filter(higher == "yes") |>  # or group_by(address)
-  summarise(across(matches("G[0-9]"), list(mean = mean, sd = sd), .names = "{.col}.{.fn}"))
+  filter(NoDocbcCost == "no afford") |>
+  summarize(across(matches(c("BMI", "MentHlth", "PhysHlth")), list(mean = mean, sd = sd), .names = "{.col}.{.fn}"))
 ```
-
+This numerical summary shows us the difference between the BMI, mental health, and physical health of those who could not see a doctor when they needed to in the past 12 months due to cost and all of the survey respondents. 
 
 #### 1-Way Contingency Table
 
 ```{r}
-table("internet at home?" = diabetes_data$variable)
+table("Dr the past 12 mo bc cost?" = diabetes_data$NoDocbcCost)
 ```
 
-#### 1-Way Contingency Table Pre-Filtered for Condition
-
-```{r}
-fil <- filter(diabetes_data, reason == "reputation")
-
-table("internet at home?" = fil$internet,
-      "address" = fil$address)
-```
+This one-way contingency table shows the number of respondents who could not see a doctor due to cost in the past 12 months ('no afford') and the number of respondents who did not run into this problem prior to this survey ('doc/afford').
 
 #### 2-Way Contingency Table
 
 ```{r}
-table("internet at home?" = diabetes_data$variable,
-      "address" = diabetes_data$variable)
+table("Dr the past 12 mo bc cost?" = diabetes_data$NoDocbcCost,
+      "Age" = diabetes_data$Age)
 ```
 
-#### 2-Way Contingency Table Using DPLYR
-
-```{r}
-diabetes_data |>
-  group_by(reason, address) |>
-  summarize(count = n()) |>
-  pivot_wider(names_from = address, values_from = count)
-```
+Here, we sorted out the number of respondents who could not see a doctor due to cost in the past 12 months ('no afford') and the number of respondents who did not run into this problem prior to this survey ('doc/afford') by age. From observation, it looks like the vast majority of respondents who could not afford to see a doctor fall between the ages of 35-64. We will further exam this in our plots below.
 
 #### Bar Counts for Plot
 
 ```{r}
 dat_barplot <- diabetes_data |>
-  group_by(reason, address) |>
+  group_by(NoDocbcCost, Age) |>
   summarize(count = n())
-```
 
-#### Side-by-Side Barplot
-
-```{r}
-ggplot(data = dat_barplot, aes(x = reason, y = count, fill = address)) +
+ggplot(data = dat_barplot, aes(x = NoDocbcCost, y = count, fill = Age)) +
   geom_bar(stat = "identity", position = "dodge") +
-  xlab("Reason for choosing school") +
-  ylab("Student count") +
-  ggtitle("Reason for choosing school by address type") +
-  scale_fill_discrete(name = "Address", labels = c("Rural", "Urban"))
+  xlab("Respondent Age") +
+  ylab("Respondent Count") +
+  ggtitle("Ability to See a Doctor Due to Cost in The Past 12 Months According to Age") +
+  scale_fill_discrete(name = "Survey Response", labels = c("18-24", "25-29", "30-34", "35-39", "40-44", "45-49", "50-54", "55-59", "60-64", "65-69", "70-74", "75-79", "80+", "do not know/refused/missing"))
 ```
 
+This barplot shows us that both respondent groups (sorted by response to NoDocbcCost) are slightly skewed to the left and fall off rapidly after the age of 65.
 
 #### What are you exploring? What do these summaries and graphs say about the relationships within the data?
 
+Through our summarizations and plots, we are exploring the correlation, if any, between our variables NoDocbcCost and Age. According to the visualizations we produced, the majority of the respondents who attempted to see a doctor in the past 12 months but could not (due to cost) fall between the ages of 35 and 64. On the other end of the spectrum, the majority of the respondents who either did not attempt to see a doctor in the past 12 months or could afford to see a doctor when they visited fall between the ages of 45 and 74. From this, we can assume that the number of respondents in the 'no afford' category drops off after age 64 because they fall into the category of those who receive medicare (65-80+). Additionally, we can assume that the vast number of respondents ages 25-64 fall under the 'doc/afford' group as they make up the workforce (approx. 25-64) and, therefore, are typically receiving some form of health insurance from their employers. However, if anyone in this age group is not fully employed or their employer does not provide health insurance, then respondents ages 26-64 can likely not afford to see a doctor when necessary (as seen in the 'no afford' group above) as they are also too old to be on their parents' healthcare plans and too young to take on medicare.
 
 ## Modeling Page Link
 
