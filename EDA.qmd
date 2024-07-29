@@ -58,85 +58,91 @@ The purpose of our exploratory data analysis, otherwise known as EDA, is to bett
 diabetes_data <- read.csv("diabetes_binary_health_indicators_BRFSS2015.csv")
 ```
 
+#### Preview the data
+
+```{r}
+glimpse(diabetes_data)
+```
+
+
 #### Convert variables to factors with meaningful names
 
 ```{r}
 # Create a factor version of the Diabetes_binary variable
 diabetes_data <- diabetes_data |>
-  mutate(___ = as.factor(___))
+  mutate(Diabetes_binary = factor(Diabetes_binary, levels = c(0, 1, 2), labels = c("no DM", "pre DM", "DM")))
 
 # Create a factor version of the HighBP variable
 diabetes_data <- diabetes_data |>
-  mutate(___ = as.factor(___))
+  mutate(HighBP = factor(HighBP, levels = c(0, 1), labels = c("low BP", "high BP")))
 
 # Create a factor version of the HighChol variable
 diabetes_data <- diabetes_data |>
-  mutate(___ = as.factor(___))
+  mutate(HighChol = factor(HighChol, levels = c(0, 1), labels = c("low chol", "high chol")))
 
 # Create a factor version of the CholCheck variable
 diabetes_data <- diabetes_data |>
-  mutate(___ = as.factor(___))
+  mutate(CholCheck = factor(CholCheck, levels = c(0, 1), labels = c("no check", "check")))
 
 # Create a factor version of the Smoker variable
 diabetes_data <- diabetes_data |>
-  mutate(___ = as.factor(___))
+  mutate(Smoker = factor(Smoker, levels = c(0, 1), labels = c("<100", ">=100")))
 
 # Create a factor version of the Stroke variable
 diabetes_data <- diabetes_data |>
-  mutate(___ = as.factor(___))
+  mutate(Stroke = factor(Stroke, levels = c(0, 1), labels = c("no", "yes")))
 
 # Create a factor version of the HeartDiseaseorAttack variable
 diabetes_data <- diabetes_data |>
-  mutate(___ = as.factor(___))
+  mutate(HeartDiseaseorAttack = factor(HeartDiseaseorAttack, levels = c(0, 1), labels = c("no CHD/MI", "CHD/MI")))
 
 # Create a factor version of the PhysActivity variable
 diabetes_data <- diabetes_data |>
-  mutate(___ = as.factor(___))
+  mutate(PhysActivity = factor(PhysActivity, levels = c(0, 1), labels = c("no", "yes")))
 
 # Create a factor version of the Fruits variable
 diabetes_data <- diabetes_data |>
-  mutate(___ = as.factor(___))
+  mutate(Fruits = factor(Fruits, levels = c(0, 1), labels = c("0/day", ">=1/day")))
 
 # Create a factor version of the Veggies variable
 diabetes_data <- diabetes_data |>
-  mutate(___ = as.factor(___))
+  mutate(Veggies = factor(Veggies, levels = c(0, 1), labels = c("0/day", ">=1/day")))
 
 # Create a factor version of the HvyAlcoholConsump variable
 diabetes_data <- diabetes_data |>
-  mutate(___ = as.factor(___))
+  mutate(HvyAlcoholConsump = factor(HvyAlcoholConsump, levels = c(0, 1), labels = c("no", "yes")))
 
 # Create a factor version of the AnyHealthcare variable
 diabetes_data <- diabetes_data |>
-  mutate(___ = as.factor(___))
+  mutate(AnyHealthcare = factor(AnyHealthcare, levels = c(0, 1), labels = c("no HC", "HC")))
 
 # Create a factor version of the NoDocbcCost variable
 diabetes_data <- diabetes_data |>
-  mutate(___ = as.factor(___))
+  mutate(NoDocbcCost = factor(NoDocbcCost, levels = c(0, 1), labels = c("doc/afford", "no afford")))
 
 # Create a factor version of the GenHlth variable
 diabetes_data <- diabetes_data |>
-  mutate(___ = as.factor(___))
+  mutate(GenHlth = factor(GenHlth, levels = c(1, 2, 3, 4, 5), labels = c("excellent", "very good", "good", "fair", "poor")))
 
 # Create a factor version of the DiffWalk variable
 diabetes_data <- diabetes_data |>
-  mutate(___ = as.factor(___))
+  mutate(DiffWalk = factor(DiffWalk, levels = c(0, 1), labels = c("no diff", "diff")))
 
 # Create a factor version of the Sex variable
 diabetes_data <- diabetes_data |>
-  mutate(___ = as.factor(___))
+  mutate(Sex = factor(Sex, levels = c(0, 1), labels = c("female", "male")))
 
 # Create a factor version of the Age variable
 diabetes_data <- diabetes_data |>
-  mutate(___ = as.factor(___))
+  mutate(Age = factor(Age, levels = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 99), labels = c("18-24", "25-29", "30-34", "35-39", "40-44", "45-49", "50-54", "55-59", "60-64", "65-69", "70-74", "75-79", "80+", "do not know/refused/missing")))
 
 # Create a factor version of the Education variable
 diabetes_data <- diabetes_data |>
-  mutate(___ = as.factor(___))
+  mutate(Education = factor(Education, levels = c(1, 2, 3, 4, 5, 6, 9), labels = c("none/kinder", "1-8", "9-11", "12/GED", "college 1-3", "college 4+", "refused")))
 
 # Create a factor version of the Income variable
 diabetes_data <- diabetes_data |>
-  mutate(___ = as.factor(___))
-
+  mutate(Income = factor(Income, levels = c(1, 2, 3, 4, 5, 6, 7, 8, 77, 99), labels = c("<$10K", "$10K-<$15K", "$15K-<$20K", "$20K-<$25K", "$25K-<$35K", "$35K-<$50K", "$50K-<$75K", "$75K+", "do not /not sure", "refused")))
 ```
 
 #### Check on missingness
@@ -150,7 +156,6 @@ diabetes_data |>
   summarize(across(everything(), sum_na))
 ```
 
-
 ## Summarizations Section
 
 #### Produce meaningful summary statistics
@@ -158,14 +163,14 @@ diabetes_data |>
 #### Numeric Variable Summary
 
 ```{r}
-dat |>
+diabetes_data |>
   summarise(across(matches("G[0-9]"), list(mean = mean, sd = sd), .names = "{.col}.{.fn}"))
 ```
 
 #### Numeric Variable Summary Filtered
 
 ```{r}
-dat |>
+diabetes_data |>
   filter(higher == "yes") |>  # or group_by(address)
   summarise(across(matches("G[0-9]"), list(mean = mean, sd = sd), .names = "{.col}.{.fn}"))
 ```
@@ -180,7 +185,7 @@ table("internet at home?" = diabetes_data$variable)
 #### 1-Way Contingency Table Pre-Filtered for Condition
 
 ```{r}
-fil <- filter(dat, reason == "reputation")
+fil <- filter(diabetes_data, reason == "reputation")
 
 table("internet at home?" = fil$internet,
       "address" = fil$address)
@@ -196,7 +201,7 @@ table("internet at home?" = diabetes_data$variable,
 #### 2-Way Contingency Table Using DPLYR
 
 ```{r}
-dat |>
+diabetes_data |>
   group_by(reason, address) |>
   summarize(count = n()) |>
   pivot_wider(names_from = address, values_from = count)
@@ -205,7 +210,7 @@ dat |>
 #### Bar Counts for Plot
 
 ```{r}
-dat_barplot <- data |>
+dat_barplot <- diabetes_data |>
   group_by(reason, address) |>
   summarize(count = n())
 ```
