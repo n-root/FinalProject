@@ -2,9 +2,18 @@
 # Final Project API File - Natalie Root
 
 # Load necessary libraries
-library(caret)
-library(randomForest)
-library(plumber)
+library(dplyr)
+library(tidyr)
+library(readr)
+library(ggplot2)
+library(httr)
+library(jsonlite)
+library(knitr)
+library(rpart)
+library(GGally)
+library(randomForest, lib.loc="C:/Users/natal/Desktop/R_packages")
+library(gbm, lib.loc="C:/Users/natal/Desktop/R_packages")
+library(caret, lib.loc="C:/Users/natal/Desktop/R_packages")
 
 # Set a seed in order to make things reproducible
 set.seed(14)
@@ -35,7 +44,13 @@ default_values <- sapply(train_data, function(col) {
   }
 })
 
-# Predict endpoint
+#* @apiTitle Best Model API
+
+#* Predict endpoint
+#* @param Age
+#* @param Income
+#* ...
+#* @get /pred
 function(...) {
   input <- list(...)
   for (name in names(input)) {
@@ -49,7 +64,8 @@ function(...) {
   return(pred)
 }
 
-# Info endpoint
+#* Info endpoint
+#* @get /info
 function() {
   list(
     name = "Natalie Root",
@@ -58,10 +74,14 @@ function() {
 }
 
 # API example function call 1
-curl "http://localhost:8000/pred"
+#curl "http://localhost:8000/pred"
 
 # API example function call 2
-curl "http://localhost:8000/pred?predictor1=value1&predictor2=value2"
+#curl "http://localhost:8000/pred?Age=4&Income=6"
 
 # API example function call 3
-curl "http://localhost:8000/pred?predictor1=value1"
+#curl "http://localhost:8000/pred?Age=4"
+
+# Run the API with plumber
+r <- plumb("C:\Users\natal\Desktop\NCSU\summer 24\ST558\Repos\FinalProject\API.R")
+r$run(port = 8000)
