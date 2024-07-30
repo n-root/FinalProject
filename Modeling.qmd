@@ -110,9 +110,15 @@ if (logreg3$results$logLoss < best_logreg$results$logLoss) best_logreg <- logreg
 
 
 ```{r}
-
+# Fit a classification tree with varying values for the complexity parameter
+treeGrid <- expand.grid(cp = seq(0.01, 0.1, by = 0.01))
+tree_model <- train(NoDocbcCost ~ ., data = train_data, method = "rpart", trControl = control, tuneGrid = treeGrid)
 ```
 
+```{r}
+# Best tree model based on complexity parameter
+best_treemodel <- tree_model$finalModel
+```
 
 ## Random Forest
 
