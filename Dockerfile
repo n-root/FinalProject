@@ -12,6 +12,9 @@ RUN apt-get update -qq && apt-get install -y \
 # Install plumber, GGally
 RUN R -e "install.packages(c('plumber', 'caret', 'randomForest'), repos='http://cran.rstudio.com/')"
 
+# Import the data
+diabetes_data <- read.csv("diabetes_binary_health_indicators_BRFSS2015.csv")
+
 # Copy API into the container
 COPY API.R API.R
 COPY diabetes_binary_health_indicators_BRFSS2015.csv diabetes_binary_health_indicators_BRFSS2015.csv 
