@@ -53,18 +53,6 @@ train_data <- diabetes_data[train_index, ]
 test_data <- diabetes_data[-train_index, ]
 ```
 
-## Predict the Diabetes_binary variable
-
-```{r}
-#use caret()
-
-# Use logLoss as metric to evaluate models
-
-# For all model types, use logLoss with 5 fold cross-validation to select the best model
-
-# Set up own grid of tuning parameters in any model where that is possible
-```
-
 ## Logistic Regression Models
 
 ```{r}
@@ -84,7 +72,7 @@ model3 <- glm(NoDocbcCost ~ Age + Income, data = train_data, family = binomial)
 
 ```{r}
 # Cross-validation to choose the best logistic regression model with logLoss as metric
-control <- trainControl(method = "cv", number = 10, summaryFunction = mnLogLoss, classProbs = TRUE)
+control <- trainControl(method = "cv", number = 5, summaryFunction = mnLogLoss, classProbs = TRUE)
 ```
 ```{r}
 logreg1 <- train(NoDocbcCost ~ ., data = train_data, method = "glm", family = binomial, trControl = control)
@@ -122,8 +110,40 @@ best_treemodel <- tree_model$finalModel
 
 ## Random Forest
 
+```{r}
+# Fit a random forest model
+rfGrid <- expand.grid(mtry = c(1, 2, 3))
+rfModel <- train(NoDocbcCost ~ ., data = train_data, method = "rf", trControl = control, tuneGrid = rfGrid)
+```
+
+```{r}
+# Best tree model based on complexity parameter
+best_rf <- rfModel$finalModel
+```
 
 ## Final Model Selection
 
+```{r}
+# Compare all 3 models on the test set
+pred_logreg <- predict(best_logreg, newdata = test_data, type = "prob")[,2]
+pred_tree <- predict(best_treemodel, newdata = test_data, type = "prob")[,2]
+pred_rf <- predict(best_rf, newdata = test_data, type = "prob")[,2]
+```
 
+```{r}
+# Calculate log loss for each model
+logloss_logreg <- mnLogLoss(data.frame(obs = test_data$NoDocbcCost, pred = ifelse(pred_logreg > 0.5, 1, 0), Yes = pred_logreg, No = 1 - pred_logreg))
+
+logloss_tree <- mnLogLoss(data.frame(obs = test_data$NoDocbcCost, pred = ifelse(pred_tree > 0.5, 1, 0), Yes = pred_tree, No = 1 - pred_tree))
+
+logloss_rf <- mnLogLoss(data.frame(obs = test_data$NoDocbcCost, pred = ifelse(pred_rf > 0.5, 1, 0), Yes = pred_rf, No = 1 - pred_rf))
+```
+```{r}
+# Identify overall winner
+winner <- "Logistic Regression"
+if (logloss_tree < logloss_logreg && logloss_tree < logloss_rf) winner <- "Classification Tree"
+if (logloss_rf < logloss_logreg && logloss_rf < logloss_tree) winner <- "Random Forest"
+
+cat("The best model is", winner)
+```
 
