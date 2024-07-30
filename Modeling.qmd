@@ -74,6 +74,7 @@ model3 <- glm(NoDocbcCost ~ Age + Income, data = train_data, family = binomial)
 # Cross-validation to choose the best logistic regression model with logLoss as metric
 control <- trainControl(method = "cv", number = 5, summaryFunction = mnLogLoss, classProbs = TRUE)
 ```
+
 ```{r}
 logreg1 <- train(NoDocbcCost ~ ., data = train_data, method = "glm", family = binomial, trControl = control)
 ```
@@ -113,7 +114,7 @@ best_treemodel <- tree_model$finalModel
 ```{r}
 # Fit a random forest model
 rfGrid <- expand.grid(mtry = c(1, 2, 3))
-rfModel <- train(NoDocbcCost ~ ., data = train_data, method = "rf", trControl = control, tuneGrid = rfGrid)
+rfModel <- train(NoDocbcCost ~ ., data = train_data, method = "rf", trControl = control, tuneGrid = rfGrid, ntree = 100)
 ```
 
 ```{r}
@@ -138,6 +139,7 @@ logloss_tree <- mnLogLoss(data.frame(obs = test_data$NoDocbcCost, pred = ifelse(
 
 logloss_rf <- mnLogLoss(data.frame(obs = test_data$NoDocbcCost, pred = ifelse(pred_rf > 0.5, 1, 0), Yes = pred_rf, No = 1 - pred_rf))
 ```
+
 ```{r}
 # Identify overall winner
 winner <- "Logistic Regression"
