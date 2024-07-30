@@ -24,14 +24,15 @@ library(caret, lib.loc="C:/Users/natal/Desktop/R_packages")
 
 ## Introduction
 
+The data set that we are utilizing throughout this project is formed from the Behavioral Risk Factor Surveillance System (BRFSS) annual telephone survey from the CDC. The survey is composed of 253,680 responses regarding health related risk behaviors, chronic health conditions, and preventative service use from 2015. In this file, we will evaluate three different types of models (logistic regression, classification tree, and random forest) and their predictive performance on the variables 'NoDocbcCost', 'Age', and 'Income.' We will identify the best models within each of these three categories and then finally identify the best model between all three categories.
 
 ## LogLoss Research
 
 #### What is logLoss?
-
+Log loss, otherwise known as logarithmic loss, is a performance metric that evaluates the predictions of classification models. It does this by measuring the accurancy of the model's prediction probabilities. The lower the log loss value, the higher the accuracy, and vice versa.
 
 #### Why may we prefer it to things like accuracy when we have a binary response variable?
-
+We may prefer log loss to things like accuracy when we have a binary response variable because it evaluates the quality of the prediction probabilities, penalizes incorrect predictions severely, and provides continuous feedback on the predictions. Overall, log loss provides a more comprehensive evaluation of statistical models and their ability to predict.
 
 ## Split the Data
 
@@ -54,6 +55,8 @@ test_data <- diabetes_data[-train_index, ]
 ```
 
 ## Logistic Regression Models
+
+A logistic regression model is a statistical model that is best suited for binary classification. These models can predict the probability that an object belongs to a class. The data set we are using contains a large number of binary variables, therefore making logistic regression models a reasonable model for us to apply.
 
 ```{r}
 # Candidate logistic regression model 1
@@ -97,6 +100,7 @@ if (logreg3$results$logLoss < best_logreg$results$logLoss) best_logreg <- logreg
 
 ## Classification Tree
 
+A classification tree model is a statistical model that is used for classifying both categorical and numerical (continuous) data into classes. We may try to use classification trees because they are simple and interpretable models.
 
 ```{r}
 # Fit a classification tree with varying values for the complexity parameter
@@ -110,6 +114,8 @@ best_treemodel <- tree_model$finalModel
 ```
 
 ## Random Forest
+
+A random forest model is a statistical model that combines multiple decision trees in order to improve the performance of the model. This also produces a stronger and more robust model than some of our other options due to the number of decision trees. We may use these models for complex classification tasks.
 
 ```{r}
 # Fit a random forest model
