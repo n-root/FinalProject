@@ -77,10 +77,10 @@ function() {
 #curl "http://localhost:8000/pred"
 
 # API example function call 2
-#curl "http://localhost:8000/pred?Age=4&Income=6"
+#curl "http://localhost:8000/pred?Age=35-39&Income=$35K-<$50K"
 
 # API example function call 3
-#curl "http://localhost:8000/pred?Age=4"
+#curl "http://localhost:8000/pred?Age=35-39"
 
 # Run the API with plumber
 r <- plumb("C:\Users\natal\Desktop\NCSU\summer 24\ST558\Repos\FinalProject\API.R")
